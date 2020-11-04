@@ -98,7 +98,7 @@ Public Class AzurirajForm
 
         conn.Open()
         If regal_red.Text <> "" And paleta.Text <> "" And lager.Text <> "" Then
-            cmd.CommandText = "UPDATE lager SET lager = " & Convert.ToInt16(lager.Text) & ",id_skladista = " & skladiste_listbox.SelectedValue & ",regal_red = " & regal_red.Text & ",paleta = " & paleta.Text & " WHERE id_artikla = " & odabraniId & " AND lager = " & lager_listBox.GetItemText(lager_listBox.SelectedItem) & " AND regal_red = " & red_listbox.GetItemText(red_listbox.SelectedItem) & " AND paleta = " & paleta_listbox.GetItemText(paleta_listbox.SelectedItem)
+            cmd.CommandText = "UPDATE lager SET id_artikla= '" & Convert.ToInt64(id_kod.Text) & "', id_skladista = '" & skladiste.SelectedValue & "',lager = '" & Convert.ToDecimal(lager.Text) & "', Paleta = '" & Convert.ToInt64(paleta.Text) & "',Regal_red = '" & regal_red.Text & "' WHERE id_artikla = '" & odabraniId & "' AND lager = '" & lager_listBox.GetItemText(lager_listBox.SelectedItem) & "'AND Paleta = '" & paleta_listbox.GetItemText(paleta_listbox.SelectedItem) & "' AND Regal_red = '" & red_listbox.GetItemText(red_listbox.SelectedItem) & "'"
             cmd.ExecuteNonQuery()
             cmd2.ExecuteNonQuery()
         Else
