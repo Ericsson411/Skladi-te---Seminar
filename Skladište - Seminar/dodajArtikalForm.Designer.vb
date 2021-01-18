@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class dodajArtikal
+Partial Class dodajArtikalForm
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -82,7 +82,7 @@ Partial Class dodajArtikal
         '
         'dodaj
         '
-        Me.dodaj.Location = New System.Drawing.Point(28, 161)
+        Me.dodaj.Location = New System.Drawing.Point(62, 161)
         Me.dodaj.Name = "dodaj"
         Me.dodaj.Size = New System.Drawing.Size(75, 23)
         Me.dodaj.TabIndex = 28
@@ -93,7 +93,7 @@ Partial Class dodajArtikal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(171, 196)
+        Me.ClientSize = New System.Drawing.Size(203, 196)
         Me.Controls.Add(Me.dodaj)
         Me.Controls.Add(Me.proizvodac)
         Me.Controls.Add(Me.Label4)

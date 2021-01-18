@@ -82,7 +82,7 @@ Partial Class DodajProizvodacaForm
         Me.Controls.Add(Me.ListBox1)
         Me.Controls.Add(Me.nazivProizvodaca_textbox)
         Me.Name = "DodajProizvodacaForm"
-        Me.Text = "Form1"
+        Me.Text = "Proizvođači"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
