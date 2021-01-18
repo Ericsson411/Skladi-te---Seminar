@@ -11,8 +11,9 @@
     <AssemblyName>Skladište - Seminar</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -83,15 +84,13 @@
     <Compile Include="DodajProizvodacaForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.vb">
-      <DependentUpon>Form1.vb</DependentUpon>
+    <Compile Include="dodajArtikalForm.Designer.vb">
+      <DependentUpon>dodajArtikalForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form1.vb">
+    <Compile Include="dodajArtikalForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GlavniForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="GlavniForm.vb" />
     <Compile Include="GlavniForm.Designer.vb">
       <DependentUpon>GlavniForm.vb</DependentUpon>
       <SubType>Form</SubType>
@@ -128,8 +127,8 @@
     <EmbeddedResource Include="DodajProizvodacaForm.resx">
       <DependentUpon>DodajProizvodacaForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.vb</DependentUpon>
+    <EmbeddedResource Include="dodajArtikalForm.resx">
+      <DependentUpon>dodajArtikalForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GlavniForm.resx">
       <DependentUpon>GlavniForm.vb</DependentUpon>

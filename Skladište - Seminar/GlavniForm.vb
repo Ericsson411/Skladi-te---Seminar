@@ -4,11 +4,16 @@ Imports MySql.Data
 Imports MySql.Data.MySqlClient
 
 
-Public Class GlavniForm
+Public Class GlobalneVarijable
+    Public Shared connStr As String = "server=remotemysql.com;user=VcLM9jz5zd;database=VcLM9jz5zd;port=3306;password=nOIVOaRp3c;"
     'https://remotemysql.com/phpmyadmin/index.php?db=VcLM9jz5zd&table=artikli&target=sql.php
 
-    Dim connStr As String = "server=remotemysql.com;user=VcLM9jz5zd;database=VcLM9jz5zd;port=3306;password=nOIVOaRp3c;"
-    Dim conn As New MySqlConnection(connStr)
+End Class
+
+
+Public Class GlavniForm
+
+    Dim conn As New MySqlConnection(GlobalneVarijable.connStr)
     Dim popisLagera As DataTable = New DataTable
     Dim popisArtikala As DataTable = New DataTable
     Dim popisProizvodaca As DataTable = New DataTable
@@ -19,6 +24,7 @@ Public Class GlavniForm
 
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         napuniListBox()
         napuniListBoxItemima()
         napuniProizvodace()
@@ -66,46 +72,50 @@ Public Class GlavniForm
 
     Private Sub napuniListBoxItemima()
 
-        popisArtikala.Clear()
+        Try
+            popisArtikala.Clear()
+            Dim Adapter As MySqlDataAdapter
+            Adapter = New MySqlDataAdapter("Select * FROM artikli JOIN proizvodaci On artikli.proizvodac_id = proizvodaci.id_proizvodaca ", conn)
 
 
-        Dim Adapter As MySqlDataAdapter
-        Adapter = New MySqlDataAdapter("Select * FROM artikli JOIN proizvodaci On artikli.proizvodac_id = proizvodaci.id_proizvodaca ", conn)
+            Adapter.Fill(popisArtikala)
 
 
-        Adapter.Fill(popisArtikala)
+            id_listbox.DataSource = popisArtikala
+            naziv_listbox.DataSource = popisArtikala
+            proizvodac_listbox.DataSource = popisArtikala
+
+            id_listbox.DisplayMember = "id_kod"
+            naziv_listbox.DisplayMember = "naziv"
+            proizvodac_listbox.DisplayMember = "naziv_proizvodaca"
 
 
-        id_listbox.DataSource = popisArtikala
-        naziv_listbox.DataSource = popisArtikala
-        proizvodac_listbox.DataSource = popisArtikala
+            id_listbox.ValueMember = "id_kod"
+            naziv_listbox.ValueMember = "id_kod"
+            proizvodac_listbox.ValueMember = "id_kod"
 
-        id_listbox.DisplayMember = "id_kod"
-        naziv_listbox.DisplayMember = "naziv"
-        proizvodac_listbox.DisplayMember = "naziv_proizvodaca"
-
-
-        id_listbox.ValueMember = "id_kod"
-        naziv_listbox.ValueMember = "id_kod"
-        proizvodac_listbox.ValueMember = "id_kod"
-
-
-
-
+        Catch ex As Exception
+            MessageBox.Show(ex.ToString())
+        End Try
 
     End Sub
 
     Private Sub napuniProizvodace()
 
-        popisProizvodaca.Clear()
+        Try
+            popisProizvodaca.Clear()
+            Dim Adapter As MySqlDataAdapter = New MySqlDataAdapter("Select * FROM proizvodaci", conn)
+            Adapter.Fill(popisProizvodaca)
 
-        Dim Adapter As MySqlDataAdapter = New MySqlDataAdapter("Select * FROM proizvodaci", conn)
-        Adapter.Fill(popisProizvodaca)
+
+            proizvodaci_comboBox.DataSource = popisProizvodaca
+            proizvodaci_comboBox.DisplayMember = "naziv_proizvodaca"
+            proizvodaci_comboBox.ValueMember = "id_proizvodaca"
+        Catch ex As Exception
+            MessageBox.Show(ex.ToString())
+        End Try
 
 
-        proizvodaci_comboBox.DataSource = popisProizvodaca
-        proizvodaci_comboBox.DisplayMember = "naziv_proizvodaca"
-        proizvodaci_comboBox.ValueMember = "id_proizvodaca"
 
 
     End Sub
@@ -147,8 +157,6 @@ Public Class GlavniForm
     Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
 
 
-        MessageBox.Show(id_listbox.GetItemText(id_listbox.SelectedItem))
-
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -157,6 +165,8 @@ Public Class GlavniForm
         azuriraj.odabraniId = id_listbox.SelectedValue
         azuriraj.ShowDialog()
         napuniListBoxItemima()
+        napuniListBox()
+
 
     End Sub
 
@@ -169,24 +179,31 @@ Public Class GlavniForm
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        Dim cmd As MySqlCommand = conn.CreateCommand
-        If MessageBox.Show("Jeste si sigurni da želite izbrisati taj artikal?", "Jeste li sigurni?", MessageBoxButtons.YesNo) = DialogResult.Yes Then
 
-            cmd.CommandText = "DELETE FROM lager WHERE id_artikla =" & id_listbox.SelectedValue & " AND lager = " & lager_listBox.GetItemText(lager_listBox.SelectedItem)
+        Try
+            Dim cmd As MySqlCommand = conn.CreateCommand
+            If MessageBox.Show("Jeste si sigurni da želite izbrisati taj artikal?", "Jeste li sigurni?", MessageBoxButtons.YesNo) = DialogResult.Yes Then
 
-            conn.Open()
-            cmd.ExecuteNonQuery()
-            conn.Close()
+                cmd.CommandText = "DELETE FROM lager WHERE id_artikla =" & id_listbox.SelectedValue & " AND lager = " & lager_listBox.GetItemText(lager_listBox.SelectedItem)
 
-            napuniListBox()
+                conn.Open()
+                cmd.ExecuteNonQuery()
+                conn.Close()
 
-        End If
+                napuniListBox()
+
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.ToString())
+        End Try
+
 
 
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         Dim dodajProizvo As DodajProizvodacaForm = New DodajProizvodacaForm
+
         dodajProizvo.ShowDialog()
 
         napuniProizvodace()
@@ -196,7 +213,7 @@ Public Class GlavniForm
     End Sub
 
     Private Sub dodajArtikalbotun_Click(sender As Object, e As EventArgs) Handles dodajArtikalbotun.Click
-        Dim dodajArtikalForm As dodajArtikal = New dodajArtikal
+        Dim dodajArtikalForm As dodajArtikalForm = New dodajArtikalForm
         dodajArtikalForm.ShowDialog()
 
         napuniListBoxItemima()
